@@ -1,4 +1,34 @@
 package com.netstock.chessadmin.service.impl;
 
-public interface PlayerServiceImpl {
+import com.netstock.chessadmin.dto.PlayerDTO;
+import com.netstock.chessadmin.entity.Player;
+import com.netstock.chessadmin.repository.PlayerRepository;
+import com.netstock.chessadmin.service.PlayerService;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PlayerServiceImpl implements PlayerService {
+    private final PlayerRepository repo;
+    private final ModelMapper modelMapper;
+
+    public PlayerServiceImpl(PlayerRepository repo, ModelMapper modelMapper) {
+        this.repo = repo;
+        this.modelMapper = modelMapper;
+    }
+
+    public List<PlayerDTO> findAll() {
+        return repo.findAll().stream().map(player -> modelMapper.map(player, PlayerDTO.class)).collect(Collectors.toList());
+    }
+
+    public void save(PlayerDTO playerDTO) {
+        repo.save(modelMapper.map(playerDTO, Player.class));
+    }
+
+    public void delete(Long playerId) {
+        repo.deleteById(playerId);
+    }
 }

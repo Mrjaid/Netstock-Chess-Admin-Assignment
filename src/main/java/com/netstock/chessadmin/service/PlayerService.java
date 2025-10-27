@@ -1,7 +1,13 @@
 package com.netstock.chessadmin.service;
 
-import org.springframework.stereotype.Service;
+import com.netstock.chessadmin.dto.PlayerDTO;
 
-@Service
+import java.util.List;
+
 public interface PlayerService {
+    List<PlayerDTO> findAll();
+
+    void save(PlayerDTO player);
+
+    void delete(Long playerId);
 }
