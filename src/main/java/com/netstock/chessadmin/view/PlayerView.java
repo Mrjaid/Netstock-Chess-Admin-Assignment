@@ -40,10 +40,10 @@ public class PlayerView extends VerticalLayout {
         this.firstName = getNewTextField("First Name", PlayerDTO::getFirstName, PlayerDTO::setFirstName);
         this.lastName = getNewTextField("Last Name", PlayerDTO::getLastName, PlayerDTO::setLastName);
         this.email = getNewTextField("Email", PlayerDTO::getEmail, PlayerDTO::setEmail);
-        this.dateOfBirth = getDateField("Birthday", PlayerDTO::getDateOfBirth, PlayerDTO::setDateOfBirth);
+        this.dateOfBirth = getDateField(PlayerDTO::getDateOfBirth, PlayerDTO::setDateOfBirth);
         this.playerService = personService;
         grid.setColumns("id", "firstName", "lastName", "email", "dateOfBirth");
-        grid.setItems(personService.findAll());
+        grid.setItems(personService.getAllPlayers());
         FormLayout form = new FormLayout(firstName, lastName, email, dateOfBirth);
         add(grid, form);
         initButtons();
@@ -52,7 +52,7 @@ public class PlayerView extends VerticalLayout {
     }
 
     private void initButtons() {
-        save.addClickListener(e -> savePerson());
+        save.addClickListener(e -> savePlayer());
         delete.addClickListener(e -> deleteSelected());
         clear.addClickListener(e -> resetView());
         HorizontalLayout buttonLayout = new HorizontalLayout(save, delete, clear);
@@ -74,25 +74,25 @@ public class PlayerView extends VerticalLayout {
     }
 
     @NotNull
-    private DatePicker getDateField(String inputName, ValueProvider<PlayerDTO, LocalDate> getter, Setter<PlayerDTO, LocalDate> setter) {
+    private DatePicker getDateField(ValueProvider<PlayerDTO, LocalDate> getter, Setter<PlayerDTO, LocalDate> setter) {
         DatePicker field = new DatePicker();
         field.setRequiredIndicatorVisible(true);
         field.setRequired(true);
-        field.setErrorMessage(inputName + " is required");
+        field.setErrorMessage("Birthday" + " is required");
         binder.forField(field)
-                .asRequired(inputName + " is required")
+                .asRequired("Birthday" + " is required")
                 .bind(getter, setter);
         return field;
     }
 
-    private void savePerson() {
+    private void savePlayer() {
         if (binder.validate().isOk()) {
             PlayerDTO person = getPlayerFromView();
             if (Objects.nonNull(selectedId)) {
                 person.setId(selectedId);
             }
             playerService.save(person);
-            grid.setItems(playerService.findAll());
+            grid.setItems(playerService.getAllPlayers());
             resetView();
         }
     }
@@ -119,7 +119,7 @@ public class PlayerView extends VerticalLayout {
         PlayerDTO selected = grid.asSingleSelect().getValue();
         if (selected != null) {
             playerService.delete(selected.getId());
-            grid.setItems(playerService.findAll());
+            grid.setItems(playerService.getAllPlayers());
             resetView();
         }
     }

@@ -5,7 +5,7 @@ import com.netstock.chessadmin.dto.PlayerDTO;
 import java.util.List;
 
 public interface PlayerService {
-    List<PlayerDTO> findAll();
+    List<PlayerDTO> getAllPlayers();
 
     void save(PlayerDTO player);
 

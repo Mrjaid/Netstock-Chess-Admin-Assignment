@@ -1,6 +1,5 @@
 package com.netstock.chessadmin.dto;
 
-import com.netstock.chessadmin.enums.MatchOutcome;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchDTO {
-    private MatchPlayerDTO playerOne;
-    private MatchPlayerDTO playerTwo;
-    private MatchOutcome outcome;
+public class MatchPlayerDTO {
+    Long id;
+    private String firstName;
+    private String lastName;
+    private long currentRank;
+    private long newRank;
 }
