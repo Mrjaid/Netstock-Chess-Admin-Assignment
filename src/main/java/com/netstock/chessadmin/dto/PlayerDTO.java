@@ -17,4 +17,6 @@ public class PlayerDTO {
     private String lastName;
     private String email;
     private LocalDate dateOfBirth;
+    private Integer rank;
+    private long numberOfGamesPlayed;
 }

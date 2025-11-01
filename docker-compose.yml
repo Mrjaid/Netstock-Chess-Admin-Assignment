@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  chess-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chess_admin:latest
+    container_name: chess_admin_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: "default"
+      # Optional: adjust memory/Java options
+      # JAVA_OPTS: "-Xms256m -Xmx512m"
+    volumes:
+      # Persist H2 files on the host so data survives container restarts
+      - ./data/h2:/app/data/h2
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+# Optional: define volumes explicitly (not required because we bind-mount a host folder)
+volumes:
+  h2data:
+    driver: local

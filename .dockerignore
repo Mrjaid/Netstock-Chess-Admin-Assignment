@@ -1,0 +1,16 @@
+# Docker ignore rules - keep build context small
+target/
+.git
+.gitignore
+**/node_modules
+**/target
+**/*.log
+# IDE files
+.idea
+*.iml
+.vscode
+# OS files
+.DS_Store
+Thumbs.db
+# Local environment
+.env

@@ -8,6 +8,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.function.ValueProvider;
@@ -27,7 +28,7 @@ public class PlayerView extends VerticalLayout {
     private final Grid<PlayerDTO> grid = new Grid<>(PlayerDTO.class);
     private final TextField firstName;
     private final TextField lastName;
-    private final TextField email;
+    private final EmailField email;
     private final DatePicker dateOfBirth;
     private final Button save = new Button("Save");
     private final Button clear = new Button("Clear");
@@ -39,10 +40,10 @@ public class PlayerView extends VerticalLayout {
         this.binder = new Binder<>(PlayerDTO.class);
         this.firstName = getNewTextField("First Name", PlayerDTO::getFirstName, PlayerDTO::setFirstName);
         this.lastName = getNewTextField("Last Name", PlayerDTO::getLastName, PlayerDTO::setLastName);
-        this.email = getNewTextField("Email", PlayerDTO::getEmail, PlayerDTO::setEmail);
+        this.email = getNewEmailField(PlayerDTO::getEmail, PlayerDTO::setEmail);
         this.dateOfBirth = getDateField(PlayerDTO::getDateOfBirth, PlayerDTO::setDateOfBirth);
         this.playerService = personService;
-        grid.setColumns("id", "firstName", "lastName", "email", "dateOfBirth");
+        grid.setColumns("firstName", "lastName", "email", "dateOfBirth", "rank");
         grid.setItems(personService.getAllPlayers());
         FormLayout form = new FormLayout(firstName, lastName, email, dateOfBirth);
         add(grid, form);
@@ -69,6 +70,17 @@ public class PlayerView extends VerticalLayout {
         field.setErrorMessage(inputName + " is required");
         binder.forField(field)
                 .asRequired(inputName + " is required")
+                .bind(getter, setter);
+        return field;
+    }
+
+    private EmailField getNewEmailField(ValueProvider<PlayerDTO, String> getter, Setter<PlayerDTO, String> setter) {
+        EmailField field = new EmailField("Email");
+        field.setRequiredIndicatorVisible(true);
+        field.setRequired(true);
+        field.setErrorMessage("Email" + " is required");
+        binder.forField(field)
+                .asRequired("Email" + " is required")
                 .bind(getter, setter);
         return field;
     }

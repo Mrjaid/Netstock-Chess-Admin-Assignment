@@ -18,7 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+.DS_Store
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -33,3 +33,5 @@ build/
 .vscode/
 .idea/
 /src/main/frontend/
+/data/h2/chess_admin.mv.db
+/data/h2/chess_admin.trace.db

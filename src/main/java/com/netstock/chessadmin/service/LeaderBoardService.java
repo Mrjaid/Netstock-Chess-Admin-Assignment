@@ -1,7 +1,10 @@
 package com.netstock.chessadmin.service;
 
-import org.springframework.stereotype.Service;
+import com.netstock.chessadmin.entity.Player;
 
-@Service
+import java.util.List;
+
 public interface LeaderBoardService {
+    List<Player> loadPlayersSortedByRank();
 }
+

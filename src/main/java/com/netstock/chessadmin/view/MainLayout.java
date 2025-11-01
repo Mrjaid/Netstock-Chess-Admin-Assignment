@@ -25,6 +25,7 @@ public class MainLayout extends AppLayout {
         menuLayout.setSpacing(true);
         menuLayout.add(new RouterLink("Players", PlayerView.class));
         menuLayout.add(new RouterLink("Matches", MatchView.class));
+        menuLayout.add(new RouterLink("Leader Board", LeaderBoardView.class));
         addToDrawer(menuLayout);
     }
 }

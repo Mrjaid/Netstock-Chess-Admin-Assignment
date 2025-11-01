@@ -8,5 +8,4 @@ public class ChessAdminApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ChessAdminApplication.class, args);
 	}
-
 }
